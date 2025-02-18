@@ -5,7 +5,7 @@ import Workout from "@/models/Workout";
 export async function POST(req) {
   try {
     const body = await req.json();
-    await connectToDatabase();  // ✅ Connect to MongoDB
+    await connectToDatabase();
     const newWorkout = await Workout.create(body);
     return NextResponse.json({ success: true, data: newWorkout }, { status: 201 });
   } catch (error) {

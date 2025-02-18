@@ -48,7 +48,7 @@ export default function Welcome() {
     });
 
     if (res.ok) {
-      fetchWorkouts(); // Refresh workouts after submitting
+      fetchWorkouts(); //refresh after submit
       setFormData({
         heartrate: "",
         time: "",
@@ -59,6 +59,25 @@ export default function Welcome() {
       });
     }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(`/api/workouts/${id}`, {
+        method: "DELETE", // Ensure the method is DELETE
+      });
+  
+      if (!res.ok) {
+        console.error("Failed to delete workout. Status:", res.status);
+        throw new Error("Failed to delete workout");
+      }
+  
+      fetchWorkouts();
+    } catch (error) {
+      console.error("Error deleting workout:", error);
+    }
+  };
+  
+  
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center bg-black overflow-auto">
@@ -100,33 +119,42 @@ export default function Welcome() {
         </button>
       </form>
 
-      <div className="w-4/5 mt-6">
+      <div className="w-4/5 mt-6 mb-5">
         <h2 className="text-white text-2xl mb-2">Workout History</h2>
         <table className="w-full border border-white text-white">
           <thead>
-            <tr className="border-b border-white">
-              <th className="p-2">Heart Rate</th>
-              <th className="p-2">Time</th>
-              <th className="p-2">Age</th>
-              <th className="p-2">Weight</th>
-              <th className="p-2">Meters Rowed</th>
-              <th className="p-2">Description</th>
+            <tr className="bg-red-600 border border-white">
+              <th className="p-2 border border-white">Heart Rate</th>
+              <th className="p-2 border border-white">Time</th>
+              <th className="p-2 border border-white">Age</th>
+              <th className="p-2 border border-white">Weight</th>
+              <th className="p-2 border border-white">Meters Rowed</th>
+              <th className="p-2 border border-white">Description</th>
+              <th className="p-2 border border-white">Delete</th>
             </tr>
           </thead>
           <tbody>
             {workouts.map((workout) => (
               <tr key={workout._id} className="border-b border-white">
-                <td className="p-2 text-center">{workout.heartrate}</td>
-                <td className="p-2 text-center">{workout.time}</td>
-                <td className="p-2 text-center">{workout.age}</td>
-                <td className="p-2 text-center">{workout.weight}</td>
-                <td className="p-2 text-center">{workout.meters}</td>
-                <td className="p-2">{workout.description}</td>
+                <td className="p-2 text-center border border-white">{workout.heartrate}</td>
+                <td className="p-2 text-center border border-white">{workout.time}</td>
+                <td className="p-2 text-center border border-white">{workout.age}</td>
+                <td className="p-2 text-center border border-white">{workout.weight}</td>
+                <td className="p-2 text-center border border-white">{workout.meters}</td>
+                <td className="p-2 border border-white">{workout.description}</td>
+                <td className="p-2 text-center">
+                <button 
+                  onClick={() => handleDelete(workout._id)} 
+                  className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700">
+                  Delete
+                </button>
+          </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
     </div>
   );
 }
