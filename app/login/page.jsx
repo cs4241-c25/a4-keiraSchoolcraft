@@ -23,9 +23,9 @@ export default function Login() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-800">
-      <form onSubmit={handleLogin} className="bg-gray-700 p-6 rounded-lg shadow-lg">
-        <h2 className="text-white text-2xl mb-4">Login</h2>
+    <div className="flex h-screen items-center justify-center bg-black">
+      <form onSubmit={handleLogin} className="p-6 rounded-lg shadow-lg">
+        <h2 className="text-white text-4xl font-mono font-bold mb-4">Login</h2>
         {error && <p className="text-red-500">{error}</p>}
         
         <input
@@ -44,7 +44,7 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         
-        <button type="submit" className="w-full bg-green-600 text-white py-2 rounded-lg">
+        <button type="submit" className="w-full bg-red-600 text-white py-2 rounded-lg">
           Log In
         </button>
       </form>
